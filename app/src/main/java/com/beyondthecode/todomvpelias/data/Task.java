@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 
+import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 
 import java.util.UUID;
 
@@ -75,8 +77,63 @@ public final class Task {
         this(titulo,descripcion,UUID.randomUUID().toString(),false);
     }
 
+    @NonNull
+    public String getmId() {
+        return mId;
+    }
 
+    @Nullable
+    public String getmTitulo() {
+        return mTitulo;
+    }
 
+    @Nullable
+    public String getmDescripcion() {
+        return mDescripcion;
+    }
 
+    public boolean ismCompletado() {
+        return mCompletado;
+    }
 
+    @Nullable
+    public String getTituloParaLista(){
+        if (!Strings.isNullOrEmpty(mTitulo)){
+            return mTitulo;
+        }else{
+            return mDescripcion;
+        }
+    }
+
+    public boolean esActivo(){
+        return !mCompletado;
+    }
+
+    public boolean esVacio(){
+        return Strings.isNullOrEmpty(mTitulo) && Strings.isNullOrEmpty(mDescripcion);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+
+        if(obj == null || getClass() != obj.getClass()) return false;
+
+        Task task = (Task)obj;
+
+        return Objects.equal(mId, task.mId) &&
+                Objects.equal(mTitulo, task.mTitulo) &&
+                Objects.equal(mDescripcion, task.mDescripcion);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(mId,mTitulo,mDescripcion);
+    }
+
+    @Override
+    public String toString() {
+        return "Task con titulo " + mTitulo;
+    }
 }
