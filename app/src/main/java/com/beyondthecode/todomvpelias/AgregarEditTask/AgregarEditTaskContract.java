@@ -12,7 +12,7 @@ public interface AgregarEditTaskContract {
     interface View extends BaseView<Presenter>{
 
         void mostrarVacioTaskError();
-        void mostrarTaskList();
+        void mostrarTasksList();
         void setTitulo(String titulo);
         void setDescripcion(String descripcion);
         boolean esActivo();
