@@ -4,16 +4,22 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.beyondthecode.todomvpelias"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         debug{
             minifyEnabled true
-
+            // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
@@ -24,27 +30,26 @@ android {
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
-
         }
     }
 
     flavorDimensions "default"
 
-    //Si necesitas más flavors, consdiere usar las dimensiones de flavor
-    productFlavors{
-        mock{
+    // If you need to add more flavors, consider using flavor dimensions.
+    productFlavors {
+        mock {
             dimension "default"
             applicationIdSuffix = ".mock"
         }
-        prod{
+        prod {
             dimension "default"
         }
     }
 
     //remover mockRelease ya que no es necesario
-    android.variantFilter{variant->
-        if(variant.buildType.name == 'release'
-            && variant.getFlavors().get(0).name == 'mock'){
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release'
+                && variant.getFlavors().get(0).name == 'mock') {
             variant.setIgnore(true)
         }
     }
@@ -59,7 +64,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
 
     implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"

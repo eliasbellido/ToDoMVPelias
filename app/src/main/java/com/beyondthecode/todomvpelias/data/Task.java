@@ -33,11 +33,39 @@ public final class Task {
     @ColumnInfo(name = "descripcion")
     private final String mDescripcion;
 
+
     @ColumnInfo(name = "completado")
     private final boolean mCompletado;
 
 
+
     /*
+     * Usar este constructor para crear un nuevo activo Task
+     * */
+
+    @Ignore
+    public Task(@Nullable String titulo, @Nullable String descripcion){
+        this(titulo,descripcion,UUID.randomUUID().toString(),false);
+    }
+
+    /*
+     * Usar este constructor para crear un task activo si el task ya tiene un id
+     * (copia de otro task)
+     * */
+    @Ignore
+    public Task(@Nullable String titulo, @Nullable String descripcion, @NonNull String id){
+        this(titulo,descripcion,id,false);
+    }
+
+    /*
+     * Usar este constructor para crear un nuevo finalizado o completado Task.
+     * */
+    @Ignore
+    public Task(@Nullable String titulo, @Nullable String descripcion, boolean completado){
+        this(titulo,descripcion,UUID.randomUUID().toString(),completado);
+    }
+
+/*
     Usar este constructor para especificar un task completado si el task ya tiene un id
     (copia de otro task)
     * */
@@ -51,49 +79,18 @@ public final class Task {
 
     }
 
-    /*
-    * Usar este constructor para crear un nuevo finalizado o completado Task.
-    * */
-    @Ignore
-    public Task(@Nullable String titulo, @Nullable String descripcion, boolean completado){
-        this(titulo,descripcion,UUID.randomUUID().toString(),completado);
-    }
 
-    /*
-    * Usar este constructor para crear un task activo si el task ya tiene un id
-    * (copia de otro task)
-    * */
-    @Ignore
-    public Task(@Nullable String titulo, @Nullable String descipcion, @NonNull String id){
-        this(titulo,descipcion,id,false);
-    }
 
-    /*
-    * Usar este constructor para crear un nuevo activo Task
-    * */
 
-    @Ignore
-    public Task(@Nullable String titulo, @Nullable String descripcion){
-        this(titulo,descripcion,UUID.randomUUID().toString(),false);
-    }
 
     @NonNull
-    public String getmId() {
+    public String getId() {
         return mId;
     }
 
     @Nullable
-    public String getmTitulo() {
+    public String getTitulo() {
         return mTitulo;
-    }
-
-    @Nullable
-    public String getmDescripcion() {
-        return mDescripcion;
-    }
-
-    public boolean ismCompletado() {
-        return mCompletado;
     }
 
     @Nullable
@@ -104,6 +101,17 @@ public final class Task {
             return mDescripcion;
         }
     }
+
+    @Nullable
+    public String getDescripcion() {
+        return mDescripcion;
+    }
+
+
+    public boolean esCompletado() {
+        return mCompletado;
+    }
+
 
     public boolean esActivo(){
         return !mCompletado;

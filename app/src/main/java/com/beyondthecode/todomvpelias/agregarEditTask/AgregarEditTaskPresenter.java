@@ -1,4 +1,4 @@
-package com.beyondthecode.todomvpelias.AgregarEditTask;
+package com.beyondthecode.todomvpelias.agregarEditTask;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,8 +70,8 @@ public class AgregarEditTaskPresenter implements AgregarEditTaskContract.Present
     public void enTaskCargado(Task task) {
         //la vista podria ya no ser capaz de manejar updates del UI
         if(mAgregarTaskView.esActivo()){
-            mAgregarTaskView.setTitulo(task.getmTitulo());
-            mAgregarTaskView.setDescripcion(task.getmDescripcion());
+            mAgregarTaskView.setTitulo(task.getTitulo());
+            mAgregarTaskView.setDescripcion(task.getDescripcion());
         }
         mEsDataPerdida = false;
 

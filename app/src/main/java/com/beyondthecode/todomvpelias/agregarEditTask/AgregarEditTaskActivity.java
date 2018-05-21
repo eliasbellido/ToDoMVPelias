@@ -1,13 +1,17 @@
-package com.beyondthecode.todomvpelias.AgregarEditTask;
+package com.beyondthecode.todomvpelias.agregarEditTask;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.beyondthecode.todomvpelias.Injection;
 import com.beyondthecode.todomvpelias.R;
 import com.beyondthecode.todomvpelias.util.ActivityUtils;
+import com.beyondthecode.todomvpelias.util.EspressoIdlingResource;
 
 public class AgregarEditTaskActivity extends AppCompatActivity{
 
@@ -37,7 +41,7 @@ public class AgregarEditTaskActivity extends AppCompatActivity{
 
         String taskId = getIntent().getStringExtra(AgregarEditTaskFragment.ARGUMENT_EDIT_TASK_ID);
 
-        setToolbarTitle(taskId);
+        setToolbarTitulo(taskId);
 
         if(agregarEditTaskFragment == null){
             agregarEditTaskFragment = AgregarEditTaskFragment.nuevaInstancia();
@@ -63,15 +67,43 @@ public class AgregarEditTaskActivity extends AppCompatActivity{
         }
 
         //crear el presentador
+        mAgregarEditTaskPresenter = new AgregarEditTaskPresenter(
+                taskId,
+                Injection.proveerTasksRepository(getApplicationContext()),
+                agregarEditTaskFragment,
+                deberiaCargarDataDelRepo
+        );
       
 
     }
 
-    private void setToolbarTitle(@Nullable String taskId) {
+    private void setToolbarTitulo(@Nullable String taskId){
         if(taskId == null){
             mActionBar.setTitle(R.string.add_task);
         }else{
             mActionBar.setTitle(R.string.edit_task);
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        //grabar el estado para que la proxima vez sepamos si necesitamos refresh la data
+        outState.putBoolean(SHOULD_LOAD_DATA_FROM_REPO_KEY,mAgregarEditTaskPresenter.esDataFaltante());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @VisibleForTesting
+    public IdlingResource obtenerCountingIdlingResource(){
+        return EspressoIdlingResource.obtenerIdlingRecurso();
+    }
+
 }
+
+
