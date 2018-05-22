@@ -90,7 +90,7 @@ public class TasksPresenter implements TasksContract.Presenter{
                             }
                             break;
                         case TASKS_COMPLETADOS:
-                            if(task.esCompletado()){
+                            if(task.isCompletado()){
                                 tasksAMostrar.add(task);
                             }
                             break;

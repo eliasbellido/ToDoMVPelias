@@ -35,7 +35,7 @@ public final class Task {
 
 
     @ColumnInfo(name = "completado")
-    private final boolean mCompletado;
+    private final boolean completado;
 
 
 
@@ -75,7 +75,7 @@ public final class Task {
         mId = id;
         mTitulo = titulo;
         mDescripcion = descripcion;
-        mCompletado = completado;
+        this.completado = completado;
 
     }
 
@@ -108,13 +108,13 @@ public final class Task {
     }
 
 
-    public boolean esCompletado() {
-        return mCompletado;
+    public boolean isCompletado() {
+        return completado;
     }
 
 
     public boolean esActivo(){
-        return !mCompletado;
+        return !completado;
     }
 
     public boolean esVacio(){

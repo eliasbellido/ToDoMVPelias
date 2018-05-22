@@ -27,7 +27,7 @@
             "notNull": false
           },
           {
-            "fieldPath": "mCompletado",
+            "fieldPath": "completado",
             "columnName": "completado",
             "affinity": "INTEGER",
             "notNull": true

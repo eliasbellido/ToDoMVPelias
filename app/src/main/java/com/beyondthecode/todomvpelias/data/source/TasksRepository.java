@@ -248,7 +248,7 @@ public class TasksRepository implements TasksDataSource {
         Iterator<Map.Entry<String,Task>> eso = mCachedTasks.entrySet().iterator();
         while(eso.hasNext()){
             Map.Entry<String,Task> entrada = eso.next();
-            if(entrada.getValue().esCompletado()){
+            if(entrada.getValue().isCompletado()){
                 eso.remove();
             }
         }

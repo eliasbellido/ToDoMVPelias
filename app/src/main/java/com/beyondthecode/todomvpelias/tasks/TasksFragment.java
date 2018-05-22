@@ -253,6 +253,11 @@ public class TasksFragment extends Fragment implements TasksContract.View{
                 false);
     }
 
+    @Override
+    public void mostrarMensajeGrabadoExitosamente() {
+        mostrarMensajeSnack(getString(R.string.successfully_saved_task_message));
+    }
+
     private void mostrarNoTasksViews(String textPrincipal, int iconRes, boolean mostrarAgregarView) {
         mTasksView.setVisibility(View.GONE);
         mNoTasksView.setVisibility(View.VISIBLE);
@@ -263,10 +268,7 @@ public class TasksFragment extends Fragment implements TasksContract.View{
 
     }
 
-    @Override
-    public void mostrarMensajeGrabadoExitosamente() {
-        mostrarMensajeSnack(getString(R.string.successfully_saved_task_message));
-    }
+
 
     private void mostrarMensajeSnack(String mensaje) {
         Snackbar.make(getView(),mensaje,Snackbar.LENGTH_LONG).show();
@@ -324,7 +326,7 @@ public class TasksFragment extends Fragment implements TasksContract.View{
 
     @Override
     public boolean esActivo() {
-        return esActivo();
+        return isAdded();
     }
 
     private static class TasksAdapter extends BaseAdapter{
@@ -338,7 +340,7 @@ public class TasksFragment extends Fragment implements TasksContract.View{
         }
 
         public void reemplazaData(List<Task> tasks){
-            setList(mTasks);
+            setList(tasks);
             notifyDataSetChanged();
         }
 
@@ -378,8 +380,8 @@ public class TasksFragment extends Fragment implements TasksContract.View{
             CheckBox chkCompletar = filaView.findViewById(R.id.complete);
 
             //Activar/completado task UI
-            chkCompletar.setChecked(task.esCompletado());
-            if(task.esCompletado()) {
+            chkCompletar.setChecked(task.isCompletado());
+            if(task.isCompletado()) {
                 filaView.setBackground(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback)); //posible error aca, verificar luego por deprecado
             }else{
                 filaView.setBackground(viewGroup.getContext().getResources().getDrawable(R.drawable.touch_feedback));
@@ -389,7 +391,7 @@ public class TasksFragment extends Fragment implements TasksContract.View{
             chkCompletar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(!task.esCompletado()){
+                    if(!task.isCompletado()){
                         mItemListener.enCompletarTaskClic(task);
                     }else{
                         mItemListener.enActivarTaskClic(task);

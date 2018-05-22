@@ -73,7 +73,7 @@ public class FalsoTasksRemoteDataSource implements TasksDataSource {
         Iterator<Map.Entry<String,Task>> eso = TASKS_SERVICE_DATA.entrySet().iterator();
         while(eso.hasNext()){
             Map.Entry<String,Task> entrada = eso.next();
-            if(entrada.getValue().esCompletado()){
+            if(entrada.getValue().isCompletado()){
                 eso.remove();
             }
         }
