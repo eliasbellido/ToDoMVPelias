@@ -21,6 +21,7 @@
         </activity>
 
         <activity android:name=".agregarEditTask.AgregarEditTaskActivity"/>
+        <activity android:name=".detalletask.DetalleTaskActivity"/>
 
     </application>
 
